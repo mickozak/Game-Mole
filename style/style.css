@@ -17,3 +17,20 @@ body{
     background-position: center center;
     background-repeat: no-repeat;
 }
+
+.points, .time{
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 3em;
+    color: white;
+}
+
+.messages{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    top: 0;
+    font-size: 3em;
+    color: red;
+}
