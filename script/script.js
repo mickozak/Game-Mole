@@ -55,7 +55,7 @@ function endGame(){
     clearInterval(gameIntervalID);
     mole.remove();
     
-    document.querySelector('.end-modal .score').innerText=points + ' scores!';
+    document.querySelector('.end-modal .score').innerText='The game is over! Your result is:' + points + ' scores!';
     
     document.querySelector('.end-modal').style.display='block';
     
