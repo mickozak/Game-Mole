@@ -17,3 +17,13 @@ function reduceTime(){
         endGame()
     }
 }
+  
+function displayPoints(points){
+    let pointsContainer = document.querySelector('.points');
+    pointsContainer.innerText='Your points: ' + points;
+} 
+    
+function displayTimes(timeParam){
+    let timeContainer = document.querySelector('.time');
+    timeContainer.innerText='Your time: ' + time;
+}
