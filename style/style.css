@@ -43,3 +43,28 @@ body{
     font-size: 3em;
     color: red;
 }
+
+.modal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+    max-width: 90vW;
+    z-index: 999999;
+    border-radius: 10%;
+}
+
+.modal button{
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10%;
+}
+
+.end-modal{ 
+    display: none;
+}
