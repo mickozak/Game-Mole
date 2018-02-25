@@ -64,3 +64,23 @@ function endGame(){
     })
     
 }
+
+function flashBackground(){ //zmiana koloru po uderzeniu kreta
+        let body = document.querySelector('body');
+        body.style.backgroundColor='red';
+        
+        setTimeout(function(){
+            body.style.backgroundColor='green';
+          
+        },100)
+    }    
+
+
+function startGame(){
+    mole=makeMole();
+    gameIntervalID=setInterval(function(){
+        mole.remove();
+        mole=makeMole();
+        reduceTime();
+    }, 1000)
+}
