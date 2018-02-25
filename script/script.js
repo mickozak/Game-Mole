@@ -50,3 +50,17 @@ function makeMole(){
     return mole;
     
 } 
+
+function endGame(){
+    clearInterval(gameIntervalID);
+    mole.remove();
+    
+    document.querySelector('.end-modal .score').innerText=points + ' scores!';
+    
+    document.querySelector('.end-modal').style.display='block';
+    
+    document.querySelector('.end-modal button').addEventListener('click', function(){
+        window.location=''
+    })
+    
+}
