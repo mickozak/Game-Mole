@@ -75,7 +75,6 @@ function flashBackground(){ //zmiana koloru po uderzeniu kreta
         },100)
     }    
 
-
 function startGame(){
     mole=makeMole();
     gameIntervalID=setInterval(function(){
