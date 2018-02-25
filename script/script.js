@@ -83,3 +83,21 @@ function startGame(){
         reduceTime();
     }, 1000)
 }
+
+function init(){
+    points=0;
+    time=10;
+    mole=null;
+    
+    displayPoints(points);
+    displayTimes(time);
+    
+    document.querySelector('.start-modal button').addEventListener('click', function(){
+        document.querySelector('.start-modal').style.display='none';
+        startGame();
+    })
+}
+    
+init();
+   
+})()
