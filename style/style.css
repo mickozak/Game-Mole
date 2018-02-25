@@ -1,5 +1,5 @@
 *{
-    cursor: url('./hammer.png') 50 50, pointer
+    cursor: url('../img/hammer.png') 50 50, pointer
 }
 
 body{
@@ -13,7 +13,7 @@ body{
     position: absolute;
     width: 10vh;
     height: 10vh;
-    background-image: url('mole.png');
+    background-image: url('../img/mole.png');
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
