@@ -1,103 +1,140 @@
-(function(){
-   
-let mole;
-let time;
-let points;
-let gameIntervalID;
-    
-function addPoint(){
-    points++;
-    displayPoints(points);
+function Game(container) {
+    this.points = 0
+    this.time = 10
+    this.mole = null
+    this.gameIntervalId = null
+
+    this.gameContainer = container
+
+    this.pointsContainer = null
+    this.timeContainer = null
+    this.startModal = null
+    this.endModal = null
+
+    this.init()
 }
-    
-function reduceTime(){
-    time--;
-    displayTimes(time);
-    if(time===0){
-        endGame()
+
+Game.prototype.init = function () {
+    this.makeUI()
+
+    this.displayPoints('Your points: ' + this.points)
+    this.displayTime('Your time: ' + this.time)
+
+
+    this.startModal.querySelector('button')
+        .addEventListener(
+            'click',
+            () => {
+                this.startModal.style.display = 'none'
+                this.startGame()
+            }
+        )
+}
+
+Game.prototype.makeUI = function () {
+    this.gameContainer.classList.add('game')
+
+    this.pointsContainer = document.createElement('div')
+    this.pointsContainer.classList.add('points')
+
+    this.timeContainer = document.createElement('div')
+    this.timeContainer.classList.add('time')
+
+    this.startModal = document.createElement('div')
+    this.startModal.classList.add('modal')
+    this.startModal.classList.add('start-modal')
+    this.startModal.innerHTML = '<h4>Game Mole <br>Click to play!</h4><button>Play!</button>'
+
+    this.endModal = document.createElement('div')
+    this.endModal.classList.add('modal')
+    this.endModal.classList.add('end-modal')
+    this.endModal.innerHTML = '<h4>The game is over. <br>Your result is:</h4><h4 class="score"></h4><button>Restart!</button>'
+
+    this.gameContainer.appendChild(this.pointsContainer)
+    this.gameContainer.appendChild(this.timeContainer)
+    this.gameContainer.appendChild(this.startModal)
+    this.gameContainer.appendChild(this.endModal)
+
+}
+
+Game.prototype.addPoint = function () {
+    this.points++
+    this.displayPoints('Your points: ' + this.points)
+}
+
+Game.prototype.reduceTime = function () {
+    this.time--
+    this.displayTime('Your time: ' + this.time)
+    if (this.time === 0) {
+        this.endGame()
     }
 }
-  
-function displayPoints(points){
-    let pointsContainer = document.querySelector('.points');
-    pointsContainer.innerText='Your points: ' + points;
-} 
-    
-function displayTimes(timeParam){
-    let timeContainer = document.querySelector('.time');
-    timeContainer.innerText='Your time: ' + time;
+
+Game.prototype.displayPoints = function (pointsParam) {
+    this.pointsContainer.innerText = pointsParam
 }
 
-function makeMole(){
-    
-    let molePosX = Math.round(Math.random()*(window.innerWidth-window.innerHeight/10));
-    let molePosY = Math.round(Math.random()*(window.innerHeight-window.innerHeight/10));
-    
-    let mole = document.createElement('div');
-    mole.classList.add('mole');
-    
-    mole.style.left = molePosX + 'px';
-    mole.style.top = molePosY + 'px';
-    
-    mole.addEventListener('click',function(){
-        mole.remove();
-        addPoint();
-        flashBackground();
-    })
-    
-    document.querySelector('body').appendChild(mole);
-    
-    return mole;
-    
-} 
 
-function endGame(){
-    clearInterval(gameIntervalID);
-    mole.remove();
-    
-    document.querySelector('.end-modal .score').innerText='The game is over! Your result is:' + points + ' scores!';
-    
-    document.querySelector('.end-modal').style.display='block';
-    
-    document.querySelector('.end-modal button').addEventListener('click', function(){
-        window.location=''
-    })
-    
+Game.prototype.displayTime = function (timeParam) {
+    this.timeContainer.innerText = timeParam
 }
 
-function flashBackground(){ //zmiana koloru po uderzeniu kreta
-        let body = document.querySelector('body');
-        body.style.backgroundColor='red';
-        
-        setTimeout(function(){
-            body.style.backgroundColor='green';
-          
-        },100)
-    }    
+Game.prototype.makeMole = function () {
+    var molePosX = Math.round(Math.random() * (window.innerWidth - window.innerHeight / 10))
+    var molePosY = Math.round(Math.random() * (window.innerHeight - window.innerHeight / 10))
 
-function startGame(){
-    mole=makeMole();
-    gameIntervalID=setInterval(function(){
-        mole.remove();
-        mole=makeMole();
-        reduceTime();
-    }, 1000)
+    var mole = document.createElement('div')
+    mole.classList.add('mole')
+    mole.style.left = molePosX + 'px'
+    mole.style.top = molePosY + 'px'
+
+    mole.addEventListener(
+        'click',
+        () => {
+            this.mole.remove()
+            this.addPoint()
+            this.flashBackground()
+        }
+    )
+
+    this.gameContainer.appendChild(mole)
+
+    return mole
 }
 
-function init(){
-    points=0;
-    time=10;
-    mole=null;
-    
-    displayPoints(points);
-    displayTimes(time);
-    
-    document.querySelector('.start-modal button').addEventListener('click', function(){
-        document.querySelector('.start-modal').style.display='none';
-        startGame();
-    })
+Game.prototype.endGame = function () {
+    clearInterval(this.gameIntervalId)
+    this.mole.remove()
+
+    this.endModal.querySelector('.score').innerText = this.points + ' points!'
+    this.endModal.style.display = 'block'
+    this.endModal.querySelector('button')
+        .addEventListener(
+            'click',
+            () => {
+                window.location = ''
+            }
+        )
 }
-    
-init();
-   
-})()
+
+Game.prototype.flashBackground = function () {
+    this.gameContainer.style.backgroundColor = 'red'
+    setTimeout(
+        () => {
+            this.gameContainer.style.backgroundColor = 'green'
+        },
+        100
+    )
+}
+
+Game.prototype.startGame = function () {
+    this.mole = this.makeMole()
+    this.gameIntervalId = setInterval(
+        () => {
+            this.mole.remove()
+            this.mole = this.makeMole()
+            this.reduceTime()
+        },
+        1000
+    )
+}
